@@ -80,7 +80,7 @@ void IntergasComponent::update()
     }
     // go to next task
     if (current_task++ == JOB3) {
-      current_task = IDLE;  // reset first task 
+      current_task = JOB1;  // reset first task 
     }
     switch (current_task)
     {
