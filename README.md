@@ -9,34 +9,9 @@ Usage
 Requires ESPHome v2022.3.0 or newer.
 
 ```yaml
-external_components:
-  - source: github://Pluimvee/esphome-intergas
-
-modbus_bridge:
-```
-
-You can set the UART ID and port to be used under the `intergas` component.
-
-```yaml
-uart:
-   id: modbus
-   # add further configuration for the UART here
-
-intergas_boiler:
-   uart_id: modbus
-```
-
-Sensors
--------
-
-Advanced
---------
-In case you are using the same UART as used for logging you need to disable the logger for using the serial by setting the baud_rate to 0:
-
-```yaml
 logger:
   level: DEBUG  
-  baud_rate: 0  # Disable using Serial for logging
+  baud_rate: 0  # Disable the use of the serial as we need it !!!!!
 
 uart:
   id: intergas_serial
@@ -45,20 +20,22 @@ uart:
   rx_pin: GPIO03
   # debug:    # use this to enable logging by UART
 
-# Some code to allow communicating with the Intergas Boiler
+# Add the external component to supprt communicating with the Intergas Boiler
 external_components:
   - source: github://Pluimvee/esphome-intergas
 
-# the intergas communicaiton module
+# Now attach the Serial to this intergas communication component
 intergas_boiler:
   uart_id: intergas_serial
-  update_interval: 5s
+  update_interval: 5s       # add a communication interval
 
+#the text sensors supported
 text_sensor:
   - platform: intergas_boiler
     mode:
-      name: "Operating Mode"
+      name: "Operating Mode"    # at least specify a name
 
+# some supported binary sensors
 binary_sensor:
   - platform: intergas_boiler
     alarm:
@@ -68,6 +45,7 @@ binary_sensor:
     tap_switch:
       name: "Water Flow"
 
+# and the supported sensors
 sensor:
   # Add sensors to monitor the boiler's temperatures
   - platform: intergas_boiler
